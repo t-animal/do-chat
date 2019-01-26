@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { Message } from 'model/message';
+import { IdentificationService } from './identification.service';
 
 const SERVER = 'ws://localhost:8080';
 
@@ -9,17 +11,23 @@ const SERVER = 'ws://localhost:8080';
 export class WebsocketServiceService {
 
   private socket: WebSocket;
-  private messageSubject = new Subject<string>();
+  private messageSubject = new Subject<Message>();
 
-  constructor() {
+  constructor(
+    private identificationService: IdentificationService
+  ) {
     this.connect()
   }
 
-  sendMessage(message: string) {
-    this.socket.send(message);
+  sendMessage(messageText: string) {
+    const message: Message = {
+      sender: this.identificationService.getId(),
+      text: messageText
+    }
+    this.socket.send(JSON.stringify(message));
   }
 
-  getMessages(): Observable<string> {
+  getMessages(): Observable<Message> {
     return this.messageSubject.asObservable();
   }
 
@@ -29,7 +37,7 @@ export class WebsocketServiceService {
   }
 
   private handleMessage(event: MessageEvent) {
-    this.messageSubject.next(event.data);
+    this.messageSubject.next(JSON.parse(event.data));
   }
 
 }

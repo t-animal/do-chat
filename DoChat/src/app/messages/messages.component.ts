@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WebsocketServiceService } from '../websocket-service.service';
 import { Subscription } from 'rxjs';
+import { Message } from 'model/message';
+import { IdentificationService } from '../identification.service';
 
 @Component({
   selector: 'app-messages',
@@ -11,10 +13,11 @@ export class MessagesComponent implements OnInit {
 
   private subscription: Subscription;
 
-  messages: string[] = [];
+  messages: Message[] = [];
 
   constructor(
-    private socket: WebsocketServiceService
+    private socket: WebsocketServiceService,
+    private identificationService: IdentificationService
   ){ }
 
   ngOnInit() {
@@ -25,5 +28,9 @@ export class MessagesComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  isIncomingMessage(message: Message) {
+    return message.sender !== this.identificationService.getId();
   }
 }

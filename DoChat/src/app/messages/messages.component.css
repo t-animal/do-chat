@@ -7,7 +7,6 @@
     max-width: 80%;
     min-height: 40px;
 
-    background: rgb(var(--background-incoming-messages));
     box-shadow: var(--drop-shadow);
     border-radius: var(--box-border-radius);
 
@@ -21,10 +20,32 @@
     filter: drop-shadow(var(--drop-shadow));
 
     position: absolute;
-    left: 100%;
     top: var(--box-border-radius);
 }
 
-.triangle path {
-    fill: rgb(var(--background-incoming-messages));
+/* Incoming messages */
+.message.incoming {
+    background: rgb(var(--background-incoming-messages));
+}
+
+.message.incoming svg.triangle {
+    right: 100%;
+    transform: scaleX(-1);
+}
+
+.message.incoming .triangle path {
+    fill:rgb(var(--background-incoming-messages));
+}
+
+/* Outgoing messages */
+.message.outgoing{
+    background: rgb(var(--background-outgoing-messages));
+}
+
+.message.outgoing svg.triangle {
+    left: 100%
+}
+
+.message.outgoing .triangle path {
+    fill:rgb(var(--background-outgoing-messages));
 }
