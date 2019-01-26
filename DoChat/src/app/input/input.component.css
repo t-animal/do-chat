@@ -1,0 +1,22 @@
+.container {
+    position: relative;
+}
+
+.attachment-icon {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    width: 15px;
+    height: 15px;
+}
+
+.text-input {
+    border: none;
+    border-radius: var(--box-border-radius);
+    box-shadow: var(--drop-shadow);
+
+    background: rgb(var(--input-background));
+
+    min-height: 30px;
+    padding-left: 25px;
+}
