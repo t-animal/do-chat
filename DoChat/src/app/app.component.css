@@ -1,0 +1,9 @@
+:root {
+    --box-border-radius: 10px;
+
+    --main-background: 87, 92, 96;
+    --background-incoming-messages: 132, 151, 176;
+    --background-outgoing-messages: 230, 230, 230;
+    --input-background: 230, 230, 230;
+    --drop-shadow: 0px 5px #858d94;
+}
