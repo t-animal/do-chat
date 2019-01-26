@@ -1,0 +1,29 @@
+header {
+    height: 30px;
+    width: 100%;
+    padding: 8px;
+
+    background: red;
+    border-bottom: darkred 6px solid;
+
+    display: flex;
+    color: white;
+    align-items: center;
+}
+
+header > div {
+    margin-right: 8px;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+}
+
+.user-name {
+    font-weight: bold;
+    font-family: sans-serif;
+    max-width: 40%;
+}
