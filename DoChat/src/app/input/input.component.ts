@@ -15,7 +15,7 @@ export class InputComponent {
     private socket: WebsocketServiceService
   ) { }
 
-  inputChanged(){
+  sendMessage(){
     this.socket.sendMessage(this.textInput.nativeElement.value);
     this.textInput.nativeElement.value = "";
   }

@@ -1,6 +1,8 @@
-<div class="container">
-<textarea class="text-input" #input (change)="inputChanged()">
+<div class="input-container">
+    <textarea class="text-input" #input></textarea>
+    <img class="attachment-icon" src="assets/attachment.svg"/>
+</div>
 
-</textarea>
-<img class="attachment-icon" src="assets/attachment.svg"/>
+<div class="send-button">
+    <img class="send-icon" src="assets/send-icon.svg" (click)="sendMessage()"/>
 </div>

@@ -1,4 +1,10 @@
-.container {
+:host {
+    display: flex;
+    align-items: center;
+}
+
+.input-container {
+    flex-grow: 1;
     position: relative;
 }
 
@@ -21,4 +27,23 @@
     padding-left: 25px;
 
     width: 100%;
+}
+
+.send-button {
+    background: rgb(var(--highlight-color-light));
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.send-icon {
+    position: relative;
+    left: 3px;
 }
