@@ -1,4 +1,5 @@
 export interface Message {
     sender: string,
-    text: string    
+    text: string,
+    version: 'v1'
 }
