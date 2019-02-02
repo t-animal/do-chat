@@ -1,17 +1,42 @@
 :root {
     --box-border-radius: 10px;
+    --border-color: 133, 141, 148;
 
-    --main-background: 87, 92, 96;
+    --main-background: 222, 235, 247;
+    --highlight-color-dark: 68, 84, 106;
+    --highlight-color-light: 88, 118, 255;
+
     --background-incoming-messages: 132, 151, 176;
     --background-outgoing-messages: 230, 230, 230;
     --input-background: 230, 230, 230;
-    --drop-shadow: 0px 5px #858d94;
+
+    --drop-shadow: 0px 5px rgb(var(--border-color));
+
+    height: 100%;
+    background: rgb(var(--main-background));
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
+    height: 100%;
     margin: 0px;
 }
 
+app-root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 main {
+    padding: 8px;
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+footer {
     padding: 8px;
 }

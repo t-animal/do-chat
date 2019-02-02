@@ -1,16 +1,19 @@
 .message {
-    padding: 15px;
+    padding: 24px 15px;
     margin: 20px;
     position: relative;
 
-    width: 300px;
-    max-width: 80%;
+    display: inline-block;
+    min-width: 20%;
+    max-width: 60%;
     min-height: 40px;
 
     box-shadow: var(--drop-shadow);
     border-radius: var(--box-border-radius);
 
     word-break: break-all;
+    
+    clear: both;
 }
 
 .triangle {
@@ -26,10 +29,11 @@
 /* Incoming messages */
 .message.incoming {
     background: rgb(var(--background-incoming-messages));
+    float: left;
 }
 
 .message.incoming svg.triangle {
-    right: 100%;
+    right: calc(100% - 1px);
     transform: scaleX(-1);
 }
 
@@ -40,10 +44,11 @@
 /* Outgoing messages */
 .message.outgoing{
     background: rgb(var(--background-outgoing-messages));
+    float: right;
 }
 
 .message.outgoing svg.triangle {
-    left: 100%
+    left: calc(100% - 1px)
 }
 
 .message.outgoing .triangle path {
