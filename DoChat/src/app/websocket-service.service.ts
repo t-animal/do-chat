@@ -29,6 +29,17 @@ export class WebsocketServiceService {
     this.socket.send(JSON.stringify(message));
   }
 
+  async sendAudio(audio: Blob){
+    const message: Message = {
+      sender: this.identificationService.getId(),
+      payload: await this.base64Encode(audio),
+      type: 'audio',
+      version: 'v1'
+    }
+
+    this.socket.send(JSON.stringify(message));
+  }
+
   getMessages(): Observable<Message> {
     return this.messageSubject.asObservable();
   }
@@ -40,6 +51,20 @@ export class WebsocketServiceService {
 
   private handleMessage(event: MessageEvent) {
     this.messageSubject.next(JSON.parse(event.data));
+  }
+
+
+  private base64Encode(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.addEventListener("load", function () {
+        resolve(<string>fileReader.result);
+      }, false);
+
+      fileReader.readAsDataURL(blob);
+
+    });
   }
 
 }
