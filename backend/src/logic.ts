@@ -1,10 +1,21 @@
 import * as WebSocket from 'ws';
 
-interface Message {
+interface BaseMessage {
     sender: string,
-    text: string,
+    payload: string,
     version: 'v1'
 }
+
+interface TextMessage extends BaseMessage {
+    type: 'text'
+}
+
+interface AudioMessage extends BaseMessage {
+    type: 'audio'
+}
+
+type Message = TextMessage | AudioMessage;
+
 
 let sockets: WebSocket[] = [];
 let history: string[] = [];
@@ -26,7 +37,7 @@ export function initSocket(newSocket: WebSocket) {
 
 function messageHandler(this: WebSocket, data: WebSocket.Data){
     const message = JSON.parse(data as string) as Message;
-    if(message.text.trim() === '') {
+    if(message.payload.trim() === '') {
         return;
     }
 
@@ -37,7 +48,6 @@ function messageHandler(this: WebSocket, data: WebSocket.Data){
         }
     });
 }
-
 
 function sendHistory(socket: WebSocket) {
     for(const historyItem of history) {

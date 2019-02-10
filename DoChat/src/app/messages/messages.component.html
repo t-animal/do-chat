@@ -2,7 +2,7 @@
   class="message" [ngClass]="{incoming: this.isIncomingMessage(message), outgoing: !this.isIncomingMessage(message)}">
 
   <div class="message-text">
-      {{message.text}}
+      {{message.payload}}
   </div>
   <svg class="triangle" viewBox="0 0 1 2" xmlns="http://www.w3.org/2000/svg">
     <path

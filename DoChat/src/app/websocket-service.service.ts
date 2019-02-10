@@ -22,7 +22,8 @@ export class WebsocketServiceService {
   sendMessage(messageText: string) {
     const message: Message = {
       sender: this.identificationService.getId(),
-      text: messageText,
+      payload: messageText,
+      type: 'text',
       version: 'v1'
     }
     this.socket.send(JSON.stringify(message));
