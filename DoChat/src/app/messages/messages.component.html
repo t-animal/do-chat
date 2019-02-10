@@ -1,9 +1,13 @@
-<div *ngFor="let message of messages" 
-  class="message" [ngClass]="{incoming: this.isIncomingMessage(message), outgoing: !this.isIncomingMessage(message)}">
+  <div
+  *ngFor="let message of messages"
+  class="message"
+  [ngClass]="{
+    incoming: this.isIncomingMessage(message),
+    outgoing: !this.isIncomingMessage(message)}">
 
-  <div class="message-text">
-      {{message.payload}}
-  </div>
+  <app-text-message 
+    [message]="message"></app-text-message>
+
   <svg class="triangle" viewBox="0 0 1 2" xmlns="http://www.w3.org/2000/svg">
     <path
        style="fill-rule:evenodd;"
