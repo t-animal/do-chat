@@ -26,6 +26,10 @@
     top: var(--box-border-radius);
 }
 
+.message[data-type="audio"] {
+    width: 80%;
+}
+
 /* Incoming messages */
 .message.incoming {
     background: rgb(var(--background-incoming-messages));

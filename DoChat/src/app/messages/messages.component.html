@@ -1,12 +1,20 @@
+
+
   <div
   *ngFor="let message of messages"
   class="message"
   [ngClass]="{
     incoming: this.isIncomingMessage(message),
-    outgoing: !this.isIncomingMessage(message)}">
+    outgoing: !this.isIncomingMessage(message)}"
+  [attr.data-type]="message.type">
 
   <app-text-message 
+    *ngIf="message.type === 'text'"
     [message]="message"></app-text-message>
+
+  <app-audio-message 
+    *ngIf="message.type === 'audio'"
+    [message]="message"></app-audio-message>
 
   <svg class="triangle" viewBox="0 0 1 2" xmlns="http://www.w3.org/2000/svg">
     <path

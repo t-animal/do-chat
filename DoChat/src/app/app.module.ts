@@ -6,6 +6,7 @@ import { InputComponent } from './input/input.component';
 import { MessagesComponent } from './messages/messages.component';
 import { HeaderComponent } from './header/header.component';
 import { TextMessageComponent } from './text-message/text-message.component';
+import { AudioMessageComponent } from './audio-message/audio-message.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { TextMessageComponent } from './text-message/text-message.component';
     InputComponent,
     MessagesComponent,
     HeaderComponent,
-    TextMessageComponent
+    TextMessageComponent,
+    AudioMessageComponent
   ],
   imports: [
     BrowserModule
