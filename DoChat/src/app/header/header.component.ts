@@ -31,5 +31,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.nameSubscription.unsubscribe();
   }
 
+  secretAdminInterface() {
+    const fiveSeconds = 5 * 1000;
+    if(new Date().getTime() - this.firstTap.getTime() > fiveSeconds) {
+      this.tapCount = 0;
+      this.firstTap = new Date();
+    }
+
+    this.tapCount++;
+
+    if(this.tapCount >= 10 && new Date().getTime() - this.firstTap.getTime() < fiveSeconds) {
+      this.tapCount = 0;
+      this.firstTap = new Date();
+      this.router.navigateByUrl('/admin');
+    }
+  }
 
 }
