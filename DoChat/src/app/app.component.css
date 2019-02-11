@@ -30,13 +30,3 @@ app-root {
     display: flex;
     flex-direction: column;
 }
-
-main {
-    padding: 8px;
-    flex-grow: 1;
-    overflow-y: scroll;
-}
-
-footer {
-    padding: 8px;
-}
