@@ -7,6 +7,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { HeaderComponent } from './header/header.component';
 import { TextMessageComponent } from './text-message/text-message.component';
 import { AudioMessageComponent } from './audio-message/audio-message.component';
+import { StorageServiceModule } from 'angular-webstorage-service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AudioMessageComponent } from './audio-message/audio-message.component';
     AudioMessageComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    StorageServiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]
