@@ -3,6 +3,7 @@ import { WebsocketServiceService } from '../websocket-service.service';
 import { Subscription } from 'rxjs';
 import { Message } from 'model/message';
 import { IdentificationService } from '../identification.service';
+import { HistoryService } from '../history.service';
 
 @Component({
   selector: 'app-messages',
@@ -17,10 +18,12 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private socket: WebsocketServiceService,
-    private identificationService: IdentificationService
+    private identificationService: IdentificationService,
+    private historyService: HistoryService
   ){ }
 
   ngOnInit() {
+    this.messages = this.historyService.getHistory();
     this.subscription = this.socket.getMessages().subscribe((message) => {
       this.messages.push(message);
     });

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Message } from 'model/message';
 import { IdentificationService } from './identification.service';
+import { HistoryService } from './history.service';
 
 const SERVER = 'ws://localhost:8080';
 
@@ -14,7 +15,8 @@ export class WebsocketServiceService {
   private messageSubject = new Subject<Message>();
 
   constructor(
-    private identificationService: IdentificationService
+    private identificationService: IdentificationService,
+    private historyService: HistoryService
   ) {
     this.connect()
   }
@@ -50,7 +52,9 @@ export class WebsocketServiceService {
   }
 
   private handleMessage(event: MessageEvent) {
-    this.messageSubject.next(JSON.parse(event.data));
+    const message = JSON.parse(event.data);
+    this.historyService.addMessage(message);
+    this.messageSubject.next(message);
   }
 
 
