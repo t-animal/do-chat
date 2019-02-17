@@ -8,6 +8,10 @@
     position: relative;
 }
 
+.recording-controls {
+    flex-grow: 1;
+}
+
 .attachment-icon {
     position: absolute;
     left: 5px;
@@ -29,7 +33,7 @@
     width: 100%;
 }
 
-.send-button {
+.button {
     background: rgb(var(--highlight-color-light));
     border-radius: 50%;
     width: 40px;
@@ -38,12 +42,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-grow: 0;
 
     padding: 5px;
+}
+
+.button .icon {
+    max-width: 70%;
+}
+
+.send-button,
+.record-button {
     margin-left: 5px;
 }
 
 .send-icon {
     position: relative;
     left: 3px;
+}
+
+.recording-info {
+    flex-grow: 1;
 }

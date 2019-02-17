@@ -8,8 +8,9 @@ type Stream = Int8Array[]
   providedIn: 'root'
 })
 export class AudioRecorderService {
+  isRecording = false;
+
   private recorder: MicRecorder = new MicRecorder({bitrate: 96});
-  private isRecording = false;
   private latestRecording: [Stream, Blob];
 
   async beginRecording() {

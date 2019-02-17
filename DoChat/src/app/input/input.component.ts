@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { WebsocketServiceService } from '../websocket-service.service';
-import * as MicRecorder from 'mic-recorder-to-mp3';
 import { AudioRecorderService } from '../audio-recorder.service';
 
 @Component({
@@ -13,22 +12,51 @@ export class InputComponent {
   @ViewChild('input')
   textInput: ElementRef<HTMLTextAreaElement>
 
+  textHasInput = false;
+
   constructor(
     private socket: WebsocketServiceService,
     private recorder: AudioRecorderService
   ) { }
 
-  sendMessage(){
+  async sendMessage(){
+    if(this.recorder.isRecording){
+      await this.recorder.endRecording();
+      this.socket.sendAudio(this.recorder.getLatestRecording());
+      return;
+    }
+
     this.socket.sendMessage(this.textInput.nativeElement.value);
     this.textInput.nativeElement.value = "";
+    this.textHasInput = false;
   }
 
   startRecordingAudio() {
     this.recorder.beginRecording();
   }
 
-  async stopAudioRecording() {
-    await this.recorder.endRecording();
-    this.socket.sendAudio(this.recorder.getLatestRecording());
+  stopAudioRecording() {
+    return this.recorder.endRecording();
+  }
+
+  textInputEvent(event: Event) {
+    console.log(this.textInput)
+    this.textHasInput = this.textInput.nativeElement !== undefined && this.textInput.nativeElement.value.trim() !== '';
+  }
+
+  shouldShowRecordButton() {
+    return !this.textHasInput && !this.recorder.isRecording;
+  }
+
+  shouldShowSendButton() {
+    return this.textHasInput || this.recorder.isRecording;
+  }
+
+  shouldShowTextInput() {
+    return !this.recorder.isRecording
+  }
+
+  shouldShowRecordingControls() {
+    return this.recorder.isRecording
   }
 }

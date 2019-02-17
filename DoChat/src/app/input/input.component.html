@@ -1,11 +1,20 @@
-<div class="input-container">
-    <textarea class="text-input" #input></textarea>
+<div class="input-container" [hidden]="!shouldShowTextInput()">
+    <textarea class="text-input" #input (input)="textInputEvent($event)"></textarea>
     <img class="attachment-icon" src="assets/attachment.svg"/>
 </div>
 
-<div class="send-button">
-    <img class="send-icon" src="assets/send-icon.svg" (click)="sendMessage()"/>
+<div class="button recording-controls" *ngIf="shouldShowRecordingControls()">
+    <img class="icon trash-icon" src="assets/trash-icon.svg" (click)="stopAudioRecording()"/>
 </div>
 
-<button (click)="startRecordingAudio()">Record</button>
-<button (click)="stopAudioRecording()">Stop</button>
+<div class="recording-info" *ngIf="shouldShowRecordingControls()">
+    Recording...
+</div>
+
+<div class="button send-button" *ngIf="shouldShowSendButton()">
+    <img class="icon send-icon" src="assets/send-icon.svg" (click)="sendMessage()"/>
+</div>
+
+<div class="button record-button" *ngIf="shouldShowRecordButton()">
+    <img class="icon record-icon" src="assets/record-icon.svg" (click)="startRecordingAudio()"/>
+</div>
