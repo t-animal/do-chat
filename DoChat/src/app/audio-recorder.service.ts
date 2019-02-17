@@ -9,20 +9,23 @@ type Stream = Int8Array[]
 })
 export class AudioRecorderService {
   private recorder: MicRecorder = new MicRecorder({bitrate: 96});
-  private recording = false;
+  private isRecording = false;
   private latestRecording: [Stream, Blob];
 
-  beginRecording() {
-    this.recorder.start()
-      .then(() => this.recording = true)  
-      .catch(error => alert('Could not start recording audio:' + error));
+  async beginRecording() {
+    try {
+      await this.recorder.start()
+      this.isRecording = true;
+    }catch(error) {
+      alert('Could not start recording audio: ' + error);
+    }
   }
 
   async endRecording() {
-    if(!this.recording){
+    if(!this.isRecording){
       return;
     }
-    this.recording = false;
+    this.isRecording = false;
     this.latestRecording = await this.recorder.stop().getMp3();
   }
 
