@@ -1,10 +1,13 @@
+:host {
+    border-bottom: 4px solid rgba(var(--border-color));
+}
+
 header {
     height: 30px;
     width: 100%;
     padding: 24px 8px;
 
     background: rgba(var(--highlight-color-dark));
-    border-bottom: 4px solid rgba(var(--border-color));
 
     display: flex;
     color: white;
