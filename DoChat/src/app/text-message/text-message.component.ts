@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IdentificationService } from '../identification.service';
+import { TextMessage } from 'model/message';
 
 @Component({
   selector: 'app-text-message',

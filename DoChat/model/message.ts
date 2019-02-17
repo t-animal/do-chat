@@ -1,15 +1,15 @@
-interface BaseMessage {
+export interface BaseMessage {
     sender: string,
     payload: string,
     version: 'v1'
 }
 
-interface TextMessage extends BaseMessage {
+export interface TextMessage extends BaseMessage {
     type: 'text'
 }
 
-interface AudioMessage extends BaseMessage {
+export interface AudioMessage extends BaseMessage {
     type: 'audio'
 }
 
-type Message = TextMessage | AudioMessage;
+export type Message = TextMessage | AudioMessage;
