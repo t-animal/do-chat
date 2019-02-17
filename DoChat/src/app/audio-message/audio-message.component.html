@@ -1,1 +1,12 @@
-<audio [src]="message.payload" type="audio/mp3" controls></audio>
+<audio [src]="message.payload" type="audio/mp3" #player (timeupdate)="updateUI()" (loadeddata)="updateUI()"></audio>
+
+<div class="controls">
+    <button *ngIf="state !== 'playing'" class="play" (click)="play()">▶</button>
+    <button *ngIf="state === 'playing'" class="pause" (click)="pause()">&#9616;&nbsp;&#9612;</button>
+    <button *ngIf="state === 'playing'" class="stop" (click)="stop()">■</button>
+    <div class="progress-bar">
+        <div class="bar"></div>
+        <div class="dot" [ngStyle]="{'left.%': percentage}"></div>
+    </div>
+</div>
+{{currentTime.toFixed(0)}} / {{duration.toFixed(0)}}

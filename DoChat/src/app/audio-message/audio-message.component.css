@@ -1,3 +1,48 @@
-audio {
-    width:100%;
+.controls {
+    display: flex;
+    justify-items: center;
+    padding-right: 5px;
+}
+
+.bar {
+    border: 1px solid white;
+}
+
+.progress-bar {
+    height: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    flex-grow: 1;
+}
+
+.dot {
+    left: 100%;
+    position: absolute;
+    height: 1rem;
+    width: 1rem;
+    background: rgb(var(--highlight-color-dark));
+    border-radius: 50%;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 2px;
+    color: white;
+    width: 20px;
+    height: 20px;
+}
+
+button.play {
+    margin-right: 20px;
+}
+
+button.pause {
+    font-size: 0.6rem;
+}
+
+button.stop {
+    font-size: 1.2rem;
 }
