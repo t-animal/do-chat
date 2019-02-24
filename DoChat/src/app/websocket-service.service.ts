@@ -25,6 +25,7 @@ export class WebsocketServiceService {
     const message: Message = {
       sender: this.identificationService.getId(),
       payload: messageText,
+      sendTime: new Date(),
       type: 'text',
       version: 'v1'
     }
@@ -35,6 +36,7 @@ export class WebsocketServiceService {
     const message: Message = {
       sender: this.identificationService.getId(),
       payload: await this.base64Encode(audio),
+      sendTime: new Date(),
       type: 'audio',
       version: 'v1'
     }
@@ -53,6 +55,8 @@ export class WebsocketServiceService {
 
   private handleMessage(event: MessageEvent) {
     const message = JSON.parse(event.data);
+    message.sendTime = new Date(message.sendTime);
+
     this.historyService.addMessage(message);
     this.messageSubject.next(message);
   }

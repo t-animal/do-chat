@@ -13,6 +13,12 @@ import { HistoryService } from '../history.service';
 export class MessagesComponent implements OnInit {
 
   private subscription: Subscription;
+  private formatter = new Intl.DateTimeFormat('de', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric' }); //TODO: If available use relativetimeformat
 
   messages: Message[] = [];
 
@@ -35,5 +41,9 @@ export class MessagesComponent implements OnInit {
 
   isIncomingMessage(message: Message) {
     return message.sender !== this.identificationService.getId();
+  }
+
+  getTimeString(message: Message){
+    return this.formatter.format(message.sendTime);
   }
 }

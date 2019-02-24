@@ -1,24 +1,32 @@
 
 
-  <div
-  *ngFor="let message of messages"
-  class="message"
-  [ngClass]="{
-    incoming: this.isIncomingMessage(message),
-    outgoing: !this.isIncomingMessage(message)}"
-  [attr.data-type]="message.type">
+<ng-container
+  *ngFor="let message of messages">
 
-  <app-text-message 
-    *ngIf="message.type === 'text'"
-    [message]="message"></app-text-message>
+  <div class="message-container"
+    [ngClass]="{
+      incoming: this.isIncomingMessage(message),
+      outgoing: !this.isIncomingMessage(message)
+    }">
+    <div
+    class="message"
+    [attr.data-type]="message.type">
 
-  <app-audio-message 
-    *ngIf="message.type === 'audio'"
-    [message]="message"></app-audio-message>
+      <app-text-message
+        *ngIf="message.type === 'text'"
+        [message]="message"></app-text-message>
 
-  <svg class="triangle" viewBox="0 0 1 2" xmlns="http://www.w3.org/2000/svg">
-    <path
-       style="fill-rule:evenodd;"
-       d="m 0,0 h 1 l -1,2 z" />
-  </svg>
-</div>
+      <app-audio-message
+        *ngIf="message.type === 'audio'"
+        [message]="message"></app-audio-message>
+
+
+      <svg class="triangle" viewBox="0 0 1 2" xmlns="http://www.w3.org/2000/svg">
+        <path
+          style="fill-rule:evenodd;"
+          d="m 0,0 h 1 l -1,2 z" />
+      </svg>
+    </div>
+    <span class="send-time">{{getTimeString(message)}}</span>
+  </div>
+</ng-container>

@@ -1,3 +1,11 @@
+:host() {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
 .message {
     padding: 24px 15px;
     margin: 20px;
@@ -26,35 +34,45 @@
     top: var(--box-border-radius);
 }
 
+.message-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .message[data-type="audio"] {
     width: 80%;
 }
 
-/* Incoming messages */
-.message.incoming {
-    background: rgb(var(--background-incoming-messages));
-    float: left;
+.send-time {
+    padding: 0px 25px;
 }
 
-.message.incoming svg.triangle {
+/* Incoming messages */
+.incoming .message {
+    background: rgb(var(--background-incoming-messages));
+}
+
+.incoming .message svg.triangle {
     right: calc(100% - 1px);
     transform: scaleX(-1);
 }
 
-.message.incoming .triangle path {
+.incoming .message .triangle path {
     fill:rgb(var(--background-incoming-messages));
 }
 
 /* Outgoing messages */
-.message.outgoing{
+.outgoing {
+    align-items: flex-end;
+}
+.outgoing .message {
     background: rgb(var(--background-outgoing-messages));
-    float: right;
 }
 
-.message.outgoing svg.triangle {
+.outgoing .message svg.triangle {
     left: calc(100% - 1px)
 }
 
-.message.outgoing .triangle path {
+.outgoing .message .triangle path {
     fill:rgb(var(--background-outgoing-messages));
 }

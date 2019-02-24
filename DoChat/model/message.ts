@@ -1,6 +1,7 @@
 export interface BaseMessage {
     sender: string,
     payload: string,
+    sendTime: Date,
     version: 'v1'
 }
 
