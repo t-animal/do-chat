@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ConfigHolderService } from '../config-holder.service';
 
 @Component({
   selector: 'app-administration',
@@ -7,15 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AdministrationComponent {
 
-  setName(){
+  constructor(
+    private config: ConfigHolderService
+  ){ }
 
+  setName(event: Event){
+    this.config.setName((<HTMLInputElement>event.target).value);
   }
 
-  setServer() {
-
-  }
-
-  goHome() {
-
+  setServer(event: Event) {
+    alert('Server changes are not used yet');
+    this.config.setName((<HTMLInputElement>event.target).value)
   }
 }
