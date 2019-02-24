@@ -13,4 +13,11 @@ export interface AudioMessage extends BaseMessage {
     type: 'audio'
 }
 
-export type Message = TextMessage | AudioMessage;
+export interface AdministrativeMessage extends BaseMessage {
+    type: 'administrative',
+    payload: AdministrativeCommand
+}
+
+export type AdministrativeCommand = 'reset';
+
+export type Message = TextMessage | AudioMessage | AdministrativeMessage;
