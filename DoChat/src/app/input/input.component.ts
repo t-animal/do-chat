@@ -1,11 +1,12 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { WebsocketServiceService } from '../websocket-service.service';
-import { AudioRecorderService } from '../audio-recorder.service';
+import { AudioRecorderService } from './audio-recorder.service';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css']
+  styleUrls: ['./input.component.css'],
+  providers: [ AudioRecorderService ]
 })
 export class InputComponent {
 

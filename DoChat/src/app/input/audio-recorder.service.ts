@@ -4,9 +4,7 @@ import * as MicRecorder from 'mic-recorder-to-mp3';
 
 type Stream = Int8Array[]
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AudioRecorderService {
   isRecording = false;
 
