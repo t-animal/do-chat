@@ -14,7 +14,7 @@
     display: inline-block;
     min-width: 20%;
     max-width: 60%;
-    min-height: 40px;
+    min-height: 60px;
 
     box-shadow: var(--drop-shadow);
     border-radius: var(--box-border-radius);
@@ -37,6 +37,7 @@
 .message-container {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 }
 
 .message[data-type="audio"] {
