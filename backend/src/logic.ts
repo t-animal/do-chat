@@ -53,6 +53,8 @@ function messageHandler(this: WebSocket, data: WebSocket.Data){
         return;
     }
 
+    console.log(`${message.sendTime} -- ${message.hasOwnProperty('senderName')? (<UserMessage>message).senderName:'---'} (${message.sender}): ${message.payload.substring(0, 20).trim()}`)
+
     history.push(<string>data);
     sockets.forEach(socket => {
         if(socket.readyState === this.OPEN){
