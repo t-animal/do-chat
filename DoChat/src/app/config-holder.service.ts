@@ -6,6 +6,8 @@ const RECEIVER_NAME_KEY = 'receiver-name';
 const SERVER_KEY = 'server-address';
 const SENDER_NAME_KEY = 'sender-name';
 
+const DEFAULT_SERVER = 'ws://localhost:8080';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -51,11 +53,11 @@ export class ConfigHolderService {
   }
 
   getServer() {
+    if(this.storage.get(SERVER_KEY) === null){
+      this.storage.set(SERVER_KEY, DEFAULT_SERVER);
+    }
+
     const storedServer: string = this.storage.get(SERVER_KEY);
-
-    if(storedServer === null)
-      return this.server.asObservable();
-
     return concat(of(storedServer), this.server.asObservable());
   }
 

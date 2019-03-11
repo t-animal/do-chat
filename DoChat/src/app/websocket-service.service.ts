@@ -5,31 +5,32 @@ import { IdentificationService } from './identification.service';
 import { HistoryService } from './history.service';
 import { ConfigHolderService } from './config-holder.service';
 
-const SERVER = 'ws://localhost:8080';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketServiceService implements OnDestroy {
 
-  private socket: WebSocket;
+  private socket: WebSocket = null;
   private messageSubject = new Subject<Message>();
   
   private senderName: string;
   private senderNameSubscription: Subscription;
+
+  private serverAddressSubscription: Subscription;
 
   constructor(
     private identificationService: IdentificationService,
     private historyService: HistoryService,
     configService: ConfigHolderService
   ) {
-    this.connect()
-
+    this.serverAddressSubscription = configService.getServer().subscribe(server => this.connect(server));
     this.senderNameSubscription = configService.getSenderName().subscribe(name => this.senderName = name);
   }
 
   ngOnDestroy() {
     this.senderNameSubscription.unsubscribe();
+    this.serverAddressSubscription.unsubscribe();
   }
 
   sendMessage(messageText: string) {
@@ -61,8 +62,11 @@ export class WebsocketServiceService implements OnDestroy {
     return this.messageSubject.asObservable();
   }
 
-  private connect() {
-    this.socket = new WebSocket(SERVER);
+  private connect(address: string) {
+    if(this.socket !== null) {
+      this.socket.close();
+    }
+    this.socket = new WebSocket(address);
     this.socket.onmessage = (event: MessageEvent) => this.handleMessage(event);
   }
 

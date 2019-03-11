@@ -1,21 +1,32 @@
 import * as WebSocket from 'ws';
 
-interface BaseMessage {
+export interface BaseMessage {
     sender: string,
     payload: string,
     sendTime: Date,
     version: 'v1'
 }
 
-interface TextMessage extends BaseMessage {
+interface UserMessage extends BaseMessage {
+    senderName: string
+}
+
+export interface TextMessage extends UserMessage {
     type: 'text'
 }
 
-interface AudioMessage extends BaseMessage {
+export interface AudioMessage extends UserMessage {
     type: 'audio'
 }
 
-type Message = TextMessage | AudioMessage;
+export interface AdministrativeMessage extends BaseMessage {
+    type: 'administrative',
+    payload: AdministrativeCommand
+}
+
+export type AdministrativeCommand = 'reset';
+
+export type Message = TextMessage | AudioMessage | AdministrativeMessage;
 
 
 let sockets: WebSocket[] = [];
