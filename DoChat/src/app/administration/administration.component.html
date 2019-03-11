@@ -1,4 +1,5 @@
 <h1>Administration interface</h1>
 <label>Name to display: <input type="text" (input)="setName($event)" placeholder="Vorname Nachname" /></label> <br />
+<label>Name to use as sender ID: <input type="text" (input)="setSenderName($event)" placeholder="Vorname Nachname" /></label> <br />
 <label>Server address: <input type="text" (input)="setServer($event)" placeholder="127.0.0.1" /></label> <br /><br />
 <button (click)="downloadService.createDownload()">Download</button>

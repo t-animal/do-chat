@@ -4,6 +4,7 @@ import { StorageService, LOCAL_STORAGE } from 'angular-webstorage-service';
 
 const RECEIVER_NAME_KEY = 'receiver-name';
 const SERVER_KEY = 'server-address';
+const SENDER_NAME_KEY = 'sender-name';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,11 @@ export class ConfigHolderService {
 
   private name = new Subject<string>();
   private server = new Subject<string>();
+  private senderName = new Subject<string>();
 
   constructor(
     @Inject(LOCAL_STORAGE) private storage: StorageService
- ){ }
+  ){ }
 
 
   setName(name: string) {
@@ -29,6 +31,14 @@ export class ConfigHolderService {
   setServer(server: string) {
     this.storage.set(SERVER_KEY, server);
     this.server.next(server);
+  }
+
+  setSenderName(name: string) {
+    if(name.trim() === ''){
+      name = 'Unknown Sender';
+    }
+    this.storage.set(SENDER_NAME_KEY, name);
+    this.senderName.next(name);
   }
 
   getName(){
@@ -45,7 +55,16 @@ export class ConfigHolderService {
 
     if(storedServer === null)
       return this.server.asObservable();
-  
+
     return concat(of(storedServer), this.server.asObservable());
+  }
+
+  getSenderName() {
+    const storedSender: string = this.storage.get(SENDER_NAME_KEY);
+
+    if(storedSender === null)
+      return this.senderName.asObservable();
+
+    return concat(of(storedSender), this.senderName.asObservable());
   }
 }

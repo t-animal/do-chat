@@ -2,7 +2,7 @@ import * as JSZip from 'jszip';
 
 import { Injectable } from '@angular/core';
 import { HistoryService } from '../history.service';
-import { Message } from 'model/message';
+import { Message, AudioMessage } from 'model/message';
 
 const AUDIO_MESSAGE_INDICATOR = 'Hat eine Sprachnachricht geschickt';
 const UNKNOWN_MESSAGE_TYPE = 'Unbekannter Nachrichtentyp';
@@ -31,9 +31,9 @@ export class ResultDownloadService {
       .map((message: Message): string => {
         switch(message.type) {
           case 'text':
-            return `${this.formatter.format(message.sendTime)}\t${message.sender}\t${message.payload}\n`;
+            return `${this.formatter.format(message.sendTime)}\t${message.senderName}\t${message.sender}\t${message.payload}\n`;
           case 'audio':
-            return `${this.formatter.format(message.sendTime)}\t${message.sender}\t${AUDIO_MESSAGE_INDICATOR}\n`;
+            return `${this.formatter.format(message.sendTime)}\t${message.senderName}\t${message.sender}\t${AUDIO_MESSAGE_INDICATOR}\n`;
           case 'administrative':
             return '';
           default:
@@ -48,7 +48,7 @@ export class ResultDownloadService {
     return this.historyService
       .getHistory()
       .filter(message => message.type === 'audio')
-      .map(message => message.payload.substr(startIndex));
+      .map((message: AudioMessage) => ({name: message.senderName, audio: message.payload.substr(startIndex)}));
   }
 
   createDownload() {
@@ -58,11 +58,11 @@ export class ResultDownloadService {
     
     zip.folder(RECORDS_FOLDER);
     let i = 0;
-    for(const audioData of this.createAudioFiles()) {
+    for(const data of this.createAudioFiles()) {
       const fileNumber = ('' + i).padStart(4, '0');
       i++;
 
-      zip.file(`${RECORDS_FOLDER}/${RECORDS_PREFIX}${fileNumber}.mp3`, audioData, {base64: true});
+      zip.file(`${RECORDS_FOLDER}/${RECORDS_PREFIX}${fileNumber}-${data.name}.mp3`, data.audio, {base64: true});
     }
 
     zip.generateAsync({type: 'blob'}).then(blob => {

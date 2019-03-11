@@ -23,4 +23,8 @@ export class AdministrationComponent {
     alert('Server changes are not used yet');
     this.config.setName((<HTMLInputElement>event.target).value)
   }
+
+  setSenderName(event: Event) {
+    this.config.setSenderName((<HTMLInputElement>event.target).value);
+  }
 }
