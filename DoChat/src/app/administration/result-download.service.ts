@@ -26,7 +26,8 @@ export class ResultDownloadService {
   ) { }
 
   private createTextFileContent() {
-    return this.historyService
+    const header = 'date\tsender name\tsender id\tmessage\n';
+    return header + this.historyService
       .getHistory()
       .map((message: Message): string => {
         switch(message.type) {
@@ -55,7 +56,7 @@ export class ResultDownloadService {
     const zip = new JSZip();
     
     zip.file('log.csv', this.createTextFileContent());
-    
+
     zip.folder(RECORDS_FOLDER);
     let i = 0;
     for(const data of this.createAudioFiles()) {
