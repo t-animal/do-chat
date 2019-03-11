@@ -19,6 +19,8 @@ export class WebsocketServiceService implements OnDestroy {
 
   private serverAddressSubscription: Subscription;
 
+  private reconnectionTimeout: number;
+
   constructor(
     private identificationService: IdentificationService,
     private historyService: HistoryService,
@@ -63,11 +65,24 @@ export class WebsocketServiceService implements OnDestroy {
   }
 
   private connect(address: string) {
+    window.clearTimeout(this.reconnectionTimeout);
+
     if(this.socket !== null) {
       this.socket.close();
     }
+
     this.socket = new WebSocket(address);
     this.socket.onmessage = (event: MessageEvent) => this.handleMessage(event);
+    this.socket.onclose = () => {
+      this.scheduleReconnect(address);
+    }
+  }
+
+  private scheduleReconnect(address: string) {
+    window.clearTimeout(this.reconnectionTimeout);
+    this.reconnectionTimeout = window.setTimeout(() => {
+      this.connect(address);
+    }, 1000);
   }
 
   private handleMessage(event: MessageEvent) {
