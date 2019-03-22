@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { Message } from 'model/message';
+import { Message } from '@model/message';
 import { IdentificationService } from './identification.service';
 import { HistoryService } from './history.service';
 import { ConfigHolderService } from './config-holder.service';

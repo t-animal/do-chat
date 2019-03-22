@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node bin/server.js",
-    "build": "tsc --outDir bin src/*"
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "ws": "^6.1.0"

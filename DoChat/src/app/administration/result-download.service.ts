@@ -2,7 +2,7 @@ import * as JSZip from 'jszip';
 
 import { Injectable } from '@angular/core';
 import { HistoryService } from '../history.service';
-import { Message, AudioMessage } from 'model/message';
+import { AudioMessage, Message } from '@model/message';
 
 const AUDIO_MESSAGE_INDICATOR = 'Hat eine Sprachnachricht geschickt';
 const UNKNOWN_MESSAGE_TYPE = 'Unbekannter Nachrichtentyp';

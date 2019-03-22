@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { AudioMessage } from 'model/message';
+
+import { AudioMessage } from '@model/message';
 
 type State = 'stopped' | 'playing' | 'paused';
 

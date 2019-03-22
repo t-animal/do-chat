@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { WebsocketServiceService } from '../websocket-service.service';
 import { Subscription } from 'rxjs';
-import { Message } from 'model/message'
+
+import { WebsocketServiceService } from '../websocket-service.service';
+import { Message } from '@model/message'
 import { IdentificationService } from '../identification.service';
 import { HistoryService } from '../history.service';
 
