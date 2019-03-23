@@ -14,7 +14,7 @@ export class WebsocketServiceService implements OnDestroy {
   private socket: WebSocket = null;
   private messageSubject = new Subject<Message>();
   
-  private senderName: string;
+  private senderName = 'Unknown Sender';
   private senderNameSubscription: Subscription;
 
   private serverAddressSubscription: Subscription;
