@@ -33,6 +33,8 @@ export class MessagesComponent implements OnInit {
     this.messages = this.historyService.getHistory();
     this.subscription = this.socket.getMessages().subscribe((message) => {
       this.messages.push(message);
+      window.setTimeout(() =>
+        this.scrollToBottom(), 0);
     });
   }
 
@@ -46,5 +48,12 @@ export class MessagesComponent implements OnInit {
 
   getTimeString(message: Message){
     return this.formatter.format(message.sendTime);
+  }
+
+  private scrollToBottom() {
+    const mainElem = document.getElementsByTagName('main')[0];
+    if(mainElem === undefined)
+    return;
+    mainElem.scrollBy(0, 10000000);
   }
 }
