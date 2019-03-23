@@ -27,6 +27,7 @@ export class ResultDownloadService {
 
   private createTextFileContent() {
     const header = 'date\tsender name\tsender id\tmessage\n';
+    let i = 0;
     return header + this.historyService
       .getHistory()
       .map((message: Message): string => {
@@ -34,7 +35,9 @@ export class ResultDownloadService {
           case 'text':
             return `${this.formatter.format(message.sendTime)}\t${message.senderName}\t${message.sender}\t${message.payload}\n`;
           case 'audio':
-            return `${this.formatter.format(message.sendTime)}\t${message.senderName}\t${message.sender}\t${AUDIO_MESSAGE_INDICATOR}\n`;
+            const fileNumber = ('' + i).padStart(4, '0');
+            i += 1;
+            return `${this.formatter.format(message.sendTime)}\t${message.senderName}\t${message.sender}\t${AUDIO_MESSAGE_INDICATOR} (${fileNumber})\n`;
           case 'administrative':
             return '';
           default:
