@@ -16,6 +16,8 @@
     <main>
       <h1>Server</h1>
       Status: <span class="server-state"></span><br/>
+      <span class="address-info" style="visibility: hidden">Adressen: Die app läuft unter <span class="frontend-address"></span>.
+      Gib in den Einstellungen als Server-Adresse <span class="backend-address"></span> ein. </span><br /><br />
       <button onclick="wrappedStartServer()">Start server</button>
       <button onclick="wrappeStopServer()">Stop server</button>
     </main>
@@ -23,6 +25,7 @@
   <script>
       const { startServer, stopServer } = require('./socket-server.js');
       const { startWebServer, stopWebServer } = require('./web-server.js');
+      const ip = require('ip');
   
       let isRunning = false;
       function wrappedStartServer() {
@@ -47,6 +50,9 @@
   
       function writeServerState() {
         document.querySelector(".server-state").textContent = isRunning ? 'Gestartet' : 'Gestoppt';
+        document.querySelector(".frontend-address").textContent = `http://${ip.address()}:8081`;
+        document.querySelector(".backend-address").textContent = `ws://${ip.address()}:8080`;
+        document.querySelector(".address-info").style.visibility = isRunning ? 'visible' : 'hidden';
       }
 
       writeServerState();

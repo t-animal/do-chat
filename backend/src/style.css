@@ -38,3 +38,9 @@ h1 {
 h2 {
     font-size: 1.8rem;
 }
+
+.frontend-address,
+.backend-address {
+    font-weight: bold;
+    font-family: monospace;
+}
