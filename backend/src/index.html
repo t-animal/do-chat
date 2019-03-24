@@ -21,7 +21,8 @@
     </main>
 
   <script>
-      const {startServer, stopServer } = require('./server.js');
+      const { startServer, stopServer } = require('./socket-server.js');
+      const { startWebServer, stopWebServer } = require('./web-server.js');
   
       let isRunning = false;
       function wrappedStartServer() {
@@ -29,6 +30,7 @@
           return;
         }
         startServer();
+        startWebServer();
         isRunning = true;
         writeServerState();
       }
@@ -38,6 +40,7 @@
           return;
         }
         stopServer();
+        stopWebServer();
         isRunning = false;
         writeServerState();
       }

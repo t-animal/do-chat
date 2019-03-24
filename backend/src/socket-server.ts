@@ -1,6 +1,6 @@
 import * as ws from 'ws';
 
-import {initSocket, reset} from './logic';
+import {initSocket, reset} from './chat-backend';
 
 let server: ws.Server | null;
 
