@@ -23,6 +23,7 @@
 body {
     height: 100%;
     margin: 0px;
+    background: rgb(var(--main-background)); /* repeated for fullscreen mode */
 }
 
 app-root {

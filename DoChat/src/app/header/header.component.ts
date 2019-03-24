@@ -31,6 +31,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.nameSubscription.unsubscribe();
   }
 
+  enterFullscreen() {
+    if(!document.body.requestFullscreen){
+      return;
+    }
+    document.body.requestFullscreen();
+  }
+
   secretAdminInterface() {
     const fiveSeconds = 5 * 1000;
     if(new Date().getTime() - this.firstTap.getTime() > fiveSeconds) {
