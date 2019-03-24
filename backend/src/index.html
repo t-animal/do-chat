@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat app</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav class="sidebar">
+      <h2>Navigation</h2>
+      <ul>
+        <li>Server</li>
+        <li>Chat</li>
+      </ul>
+    </nav>
+    <main>
+      <h1>Server</h1>
+      Status: <span class="server-state"></span><br/>
+      <button onclick="wrappedStartServer()">Start server</button>
+      <button onclick="wrappeStopServer()">Stop server</button>
+    </main>
+
+  <script>
+      const {startServer, stopServer } = require('./server.js');
+  
+      let isRunning = false;
+      function wrappedStartServer() {
+        if(isRunning){
+          return;
+        }
+        startServer();
+        isRunning = true;
+        writeServerState();
+      }
+
+      function wrappeStopServer() {
+        if(!isRunning) {
+          return;
+        }
+        stopServer();
+        isRunning = false;
+        writeServerState();
+      }
+  
+      function writeServerState() {
+        document.querySelector(".server-state").textContent = isRunning ? 'Gestartet' : 'Gestoppt';
+      }
+
+      writeServerState();
+    </script>
+  </body>
+</html>

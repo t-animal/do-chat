@@ -1,12 +1,14 @@
 {
   "scripts": {
-    "start": "node bin/server.js",
-    "build": "tsc -p tsconfig.json"
+    "start": "electron bin/ui.js",
+    "build": "tsc -p tsconfig.json && cp src/*{json,css,html} bin;"
   },
   "dependencies": {
     "ws": "^6.1.0"
   },
   "devDependencies": {
-    "@types/ws": "^6.0.1"
+    "@types/electron": "^1.6.10",
+    "@types/ws": "^6.0.1",
+    "electron": "^4.1.1"
   }
 }

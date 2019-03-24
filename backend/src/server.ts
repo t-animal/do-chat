@@ -1,11 +1,26 @@
 import * as ws from 'ws';
 
-import {initSocket} from './logic';
+import {initSocket, reset} from './logic';
 
-const server = new ws.Server({
-    port: 8080
-});
+let server: ws.Server | null;
 
-server.on('connection', (socket, request) => {
-    initSocket(<any>socket);
-});
+export function startServer() {
+    server = new ws.Server({
+        port: 8080
+    });
+
+    server.on('connection', (socket, request) => {
+        initSocket(<any>socket);
+    });
+}
+
+export function stopServer() {
+    if(!server){
+        return;
+    }
+
+    reset();
+    server.close();
+    server.removeAllListeners();
+    server = null;
+}

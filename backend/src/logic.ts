@@ -5,6 +5,12 @@ import { Message, UserMessage } from '@model/message';
 let sockets: WebSocket[] = [];
 let history: string[] = [];
 
+export function reset() {
+    sockets.forEach(socket => socket.close());
+    sockets = [];
+    history = [];
+}
+
 export function initSocket(newSocket: WebSocket) {
     sockets.push(newSocket);
     sendHistory(newSocket);
