@@ -20,11 +20,14 @@
       Gib in den Einstellungen als Server-Adresse <span class="backend-address"></span> ein. </span><br /><br />
       <button onclick="wrappedStartServer()">Start server</button>
       <button onclick="wrappeStopServer()">Stop server</button>
+        Technischer kram:
+        <div class="log-output"></div>
     </main>
 
   <script>
       const { startServer, stopServer } = require('./socket-server.js');
       const { startWebServer, stopWebServer } = require('./web-server.js');
+      const { wrapConsole } = require('./wrap-console.js');
       const ip = require('ip');
   
       let isRunning = false;
@@ -56,6 +59,15 @@
       }
 
       writeServerState();
+
+      function appendLog(methodName, ...args) {
+        document.querySelector('.log-output').textContent += `${methodName.toUpperCase()} -- ${new Date()}: ${args}\n`;
+      }
+
+      wrapConsole('log', appendLog);
+      wrapConsole('error', appendLog);
+      wrapConsole('warn', appendLog);
+
     </script>
   </body>
 </html>

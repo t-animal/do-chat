@@ -9,19 +9,23 @@ export function reset() {
     sockets.forEach(socket => socket.close());
     sockets = [];
     history = [];
+    console.log('Chat backend has been reset');
 }
 
 export function initSocket(newSocket: WebSocket) {
+    console.log('New connection from frontend');
     sockets.push(newSocket);
     sendHistory(newSocket);
 
     (<any>newSocket).on('message', messageHandler);
 
-    newSocket.on('close', () => {
+    newSocket.on('close', (socket: WebSocket, code: number, reason: string) => {
+        console.log('Lost connection to a frontend', code, reason);
         sockets = sockets.filter(elem => elem !== newSocket);
     });
 
-    newSocket.on('error', () => {
+    newSocket.on('error', (socket: WebSocket, error: Error) => {
+        console.error('Lost connection to a frontend', error);
         sockets = sockets.filter(elem => elem !== newSocket);
     });
 }

@@ -16,8 +16,8 @@ export function startWebServer() {
 
     server = createServer(options);
     server.listen(8081);
-    server.address
-
+    
+    console.log("Http server has been started");
 }
 
 export function stopWebServer(){
@@ -27,4 +27,6 @@ export function stopWebServer(){
 
     server.close();
     server = null;
+
+    console.log("Http server has been stopped");
 }

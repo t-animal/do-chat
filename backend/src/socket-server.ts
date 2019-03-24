@@ -12,6 +12,8 @@ export function startServer() {
     server.on('connection', (socket, request) => {
         initSocket(<any>socket);
     });
+
+    console.log('Socket server has been started');
 }
 
 export function stopServer() {
@@ -23,4 +25,6 @@ export function stopServer() {
     server.close();
     server.removeAllListeners();
     server = null;
+
+    console.log('Socket server has been stopped');
 }
