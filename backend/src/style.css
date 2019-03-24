@@ -21,14 +21,25 @@ nav.sidebar {
     background: white;
 }
 
+nav li {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
 html {
     font-family: sans-serif;
+}
+
+.preview {
+    flex-grow: 1;
 }
 
 main {
     flex-grow: 1;
     padding-left: 10px;
     padding-right: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
@@ -43,4 +54,31 @@ h2 {
 .backend-address {
     font-weight: bold;
     font-family: monospace;
+}
+
+
+.info-area, .button-area, .log-area {
+    margin-top: 2rem;
+}
+
+.log-area {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 15px;
+}
+
+.log-output {
+    white-space: pre-wrap;
+    flex-grow: 1;
+    font-family: monospace;
+    overflow-y: scroll;
+}
+
+main[data-page] {
+    display: none;
+}
+
+main[data-page].active {
+    display: flex;
 }

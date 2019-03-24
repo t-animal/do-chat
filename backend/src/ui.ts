@@ -1,16 +1,12 @@
-// import { app } from 'electron';
-
-// import { createWindow } from './application';
-
 import { app, BrowserWindow } from 'electron';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow | null;
 
-export function createWindow () {
+function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 })
+  win = new BrowserWindow({ width: 800, height: 600, webPreferences: {nodeIntegration: true}});
 
   // and load the index.html of the app.
   win.loadFile('index.html')
@@ -37,6 +33,3 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
     app.quit();
 })
-
-
-

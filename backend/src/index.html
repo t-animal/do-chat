@@ -2,26 +2,48 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Chat app</title>
+    <title>Chat app - Administration und Server</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <nav class="sidebar">
       <h2>Navigation</h2>
       <ul>
-        <li>Server</li>
-        <li>Chat</li>
+        <li onclick="showPage('server')">Server</li>
+        <li onclick="showPage('chat')">Chat</li>
       </ul>
     </nav>
-    <main>
+
+    <main data-page="chat">
+        <h1>Chat</h1>
+        <span class="intro">
+         Hier kannst du mitlesen, was die Teilnehmer schreiben. Dies ist ein teilnehmender Chat-Partner
+         wie alle anderen Teilnehmer auch und muss dementsprechend genauso konfiguriert werden!
+        </span>
+        <iframe class="preview" src="http://localhost:8081"></iframe>
+    </main>
+  
+    <main data-page="server" class="active">
       <h1>Server</h1>
-      Status: <span class="server-state"></span><br/>
-      <span class="address-info" style="visibility: hidden">Adressen: Die app läuft unter <span class="frontend-address"></span>.
-      Gib in den Einstellungen als Server-Adresse <span class="backend-address"></span> ein. </span><br /><br />
-      <button onclick="wrappedStartServer()">Start server</button>
-      <button onclick="wrappeStopServer()">Stop server</button>
+      <span class="intro">
+      Hier kannst du den server starten und stoppen und erhältst Informationen zu den notwendigen Einstellungen.
+      </span>
+      <div class="info-area">
+        Status: <span class="server-state"></span><br/>
+        <span class="address-info" style="visibility: hidden">Adressen: Die app läuft unter <span class="frontend-address"></span>.
+        Gib in den Einstellungen als Server-Adresse <span class="backend-address"></span> ein. </span>
+      </div>
+
+      <div class="button-area">
+        <button onclick="wrappedStartServer()">Start server</button>
+        <button onclick="wrappeStopServer()">Stop server</button>
+      </div>
+
+      <div class="log-area">
         Technischer kram:
         <div class="log-output"></div>
+      </div>
+
     </main>
 
   <script>
@@ -56,6 +78,7 @@
         document.querySelector(".frontend-address").textContent = `http://${ip.address()}:8081`;
         document.querySelector(".backend-address").textContent = `ws://${ip.address()}:8080`;
         document.querySelector(".address-info").style.visibility = isRunning ? 'visible' : 'hidden';
+        document.querySelector("iframe").contentDocument.location.reload(true);
       }
 
       writeServerState();
@@ -67,6 +90,15 @@
       wrapConsole('log', appendLog);
       wrapConsole('error', appendLog);
       wrapConsole('warn', appendLog);
+
+      function showPage(page) {
+        const pageElem = document.querySelector(`main[data-page=${page}`);
+        if(!pageElem){
+          return;
+        }
+        document.querySelector('main[data-page].active').classList.remove('active');
+        pageElem.classList.add('active');
+      }
 
     </script>
   </body>
