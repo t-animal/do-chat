@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { Message } from '@model/message';
+import { UserMessage, AudioMessage, TextMessage, isUserMessage, isHistoryMessage, HistoryMessage } from '@model/message';
 import { IdentificationService } from './identification.service';
 import { HistoryService } from './history.service';
 import { ConfigHolderService } from './config-holder.service';
@@ -12,7 +12,7 @@ import { ConfigHolderService } from './config-holder.service';
 export class WebsocketServiceService implements OnDestroy {
 
   private socket: WebSocket = null;
-  private messageSubject = new Subject<Message>();
+  private messageSubject = new Subject<UserMessage>();
   
   private senderName = 'Unknown Sender';
   private senderNameSubscription: Subscription;
@@ -36,7 +36,7 @@ export class WebsocketServiceService implements OnDestroy {
   }
 
   sendMessage(messageText: string) {
-    const message: Message = {
+    const message: TextMessage = {
       sender: this.identificationService.getId(),
       senderName: this.senderName,
       payload: messageText,
@@ -48,7 +48,7 @@ export class WebsocketServiceService implements OnDestroy {
   }
 
   async sendAudio(audio: Blob){
-    const message: Message = {
+    const message: AudioMessage = {
       sender: this.identificationService.getId(),
       senderName: this.senderName,
       payload: await this.base64Encode(audio),
@@ -60,11 +60,15 @@ export class WebsocketServiceService implements OnDestroy {
     this.socket.send(JSON.stringify(message));
   }
 
-  getMessages(): Observable<Message> {
+  getMessages(): Observable<UserMessage> {
     return this.messageSubject.asObservable();
   }
 
-  private connect(address: string) {
+  private reconnect(address: string){
+    this.connect(address, true);
+  }
+
+  private connect(address: string, isReconnect = false) {
     window.clearTimeout(this.reconnectionTimeout);
 
     if(this.socket !== null) {
@@ -72,7 +76,7 @@ export class WebsocketServiceService implements OnDestroy {
     }
 
     this.socket = new WebSocket(address);
-    this.socket.onmessage = (event: MessageEvent) => this.handleMessage(event);
+    this.socket.onmessage = (event: MessageEvent) => this.handleMessage(event, isReconnect);
     this.socket.onclose = () => {
       this.scheduleReconnect(address);
     }
@@ -81,16 +85,31 @@ export class WebsocketServiceService implements OnDestroy {
   private scheduleReconnect(address: string) {
     window.clearTimeout(this.reconnectionTimeout);
     this.reconnectionTimeout = window.setTimeout(() => {
-      this.connect(address);
+      this.reconnect(address);
     }, 1000);
   }
 
-  private handleMessage(event: MessageEvent) {
+  private handleMessage(event: MessageEvent, ignoreHistory: boolean) {
     const message = JSON.parse(event.data);
+    if(isUserMessage(message)){
+      this.handleUserMessage(message);
+    }
+    if(isHistoryMessage(message) && !ignoreHistory) {
+      this.handleHistoryMessage(message);
+    }
+  }
+
+  private handleUserMessage(message: UserMessage) {
     message.sendTime = new Date(message.sendTime);
 
     this.historyService.addMessage(message);
     this.messageSubject.next(message);
+  }
+
+  private handleHistoryMessage(message: HistoryMessage) {
+    for(const userMessage of message.payload) {
+      this.handleUserMessage(userMessage);
+    }
   }
 
 

@@ -41,7 +41,6 @@ export class InputComponent {
   }
 
   textInputEvent(event: Event) {
-    console.log(this.textInput)
     this.textHasInput = this.textInput.nativeElement !== undefined && this.textInput.nativeElement.value.trim() !== '';
   }
 

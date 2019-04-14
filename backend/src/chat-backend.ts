@@ -1,9 +1,9 @@
 import * as WebSocket from 'ws';
 
-import { Message, UserMessage } from '@model/message';
+import { isUserMessage, UserMessage, HistoryMessage } from '@model/message';
 
 let sockets: WebSocket[] = [];
-let history: string[] = [];
+let history: UserMessage[] = [];
 
 export function reset() {
     sockets.forEach(socket => socket.close());
@@ -31,14 +31,14 @@ export function initSocket(newSocket: WebSocket) {
 }
 
 function messageHandler(this: WebSocket, data: WebSocket.Data){
-    const message = JSON.parse(data as string) as Message;
-    if(message.payload.trim() === '') {
+    const message = JSON.parse(data as string) as UserMessage;
+    if(!isUserMessage(message) || message.payload.trim() === '') {
         return;
     }
 
     console.log(`${message.sendTime} -- ${message.hasOwnProperty('senderName')? (<UserMessage>message).senderName:'---'} (${message.sender}): ${message.payload.substring(0, 20).trim()}`)
 
-    history.push(<string>data);
+    history.push(message);
     sockets.forEach(socket => {
         if(socket.readyState === this.OPEN){
             socket.send(data);
@@ -47,7 +47,6 @@ function messageHandler(this: WebSocket, data: WebSocket.Data){
 }
 
 function sendHistory(socket: WebSocket) {
-    for(const historyItem of history) {
-        socket.send(historyItem);
-    }
+    const historyMessage: HistoryMessage = { version: 'v1', type: 'administrative', command: 'history', payload: history };
+    socket.send(JSON.stringify(historyMessage));
 }

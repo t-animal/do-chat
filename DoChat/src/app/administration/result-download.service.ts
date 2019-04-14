@@ -2,7 +2,7 @@ import * as JSZip from 'jszip';
 
 import { Injectable } from '@angular/core';
 import { HistoryService } from '../history.service';
-import { AudioMessage, Message } from '@model/message';
+import { AudioMessage, Message, UserMessage } from '@model/message';
 
 const AUDIO_MESSAGE_INDICATOR = 'Hat eine Sprachnachricht geschickt';
 const UNKNOWN_MESSAGE_TYPE = 'Unbekannter Nachrichtentyp';
@@ -30,7 +30,7 @@ export class ResultDownloadService {
     let i = 0;
     return header + this.historyService
       .getHistory()
-      .map((message: Message): string => {
+      .map((message: UserMessage): string => {
         switch(message.type) {
           case 'text':
             return `${this.formatter.format(message.sendTime)}\t${message.senderName}\t${message.sender}\t${message.payload}\n`;

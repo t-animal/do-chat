@@ -3,6 +3,8 @@ export interface BaseMessage {
     version: 'v1';
     payload: any;
 }
+
+
 export interface UserMessage extends BaseMessage {
     senderName: string;
     sender: string;
@@ -15,7 +17,9 @@ export interface TextMessage extends UserMessage {
 export interface AudioMessage extends UserMessage {
     type: 'audio';
 }
-export declare type AdministrativeCommand = 'reset' | 'history';
+
+
+export declare type AdministrativeCommand = 'reset'|'history';
 export declare type Message = TextMessage | AudioMessage | AdministrativeMessage;
 export interface AdministrativeMessage extends BaseMessage {
     type: 'administrative';
@@ -25,6 +29,14 @@ export interface HistoryMessage extends AdministrativeMessage {
     command: AdministrativeCommand;
     payload: UserMessage[];
 }
-export declare function isUserMessage(message: any): message is UserMessage;
-export declare function isAdministrativeMessage(message: any): message is AdministrativeMessage;
-export declare function isHistoryMessage(message: any): message is HistoryMessage;
+
+
+export function isUserMessage(message: any): message is UserMessage {
+    return message.type === 'text' || message.type === 'audio';
+}
+export function isAdministrativeMessage(message: any): message is AdministrativeMessage {
+    return message.type === 'administrative';
+}
+export function isHistoryMessage(message: any): message is HistoryMessage {
+    return isAdministrativeMessage(message) && message.command === 'history';
+}

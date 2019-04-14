@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { WebsocketServiceService } from '../websocket-service.service';
-import { Message } from '@model/message'
+import { UserMessage } from '@model/message'
 import { IdentificationService } from '../identification.service';
 import { HistoryService } from '../history.service';
 
@@ -21,7 +21,7 @@ export class MessagesComponent implements OnInit {
     hour: 'numeric',
     minute: 'numeric' }); //TODO: If available use relativetimeformat
 
-  messages: Message[] = [];
+  messages: UserMessage[] = [];
 
   constructor(
     private socket: WebsocketServiceService,
@@ -42,11 +42,11 @@ export class MessagesComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  isIncomingMessage(message: Message) {
+  isIncomingMessage(message: UserMessage) {
     return message.sender !== this.identificationService.getId();
   }
 
-  getTimeString(message: Message){
+  getTimeString(message: UserMessage){
     return this.formatter.format(message.sendTime);
   }
 
