@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "electron bin/ui.js",
-    "build": "tsc -p tsconfig.json && cp src/*{json,css,html} bin;"
+    "cli": "node bin/cli.js",
+    "build": "tsc --build tsconfig.json && cp src/*{json,css,html} bin;"
   },
   "dependencies": {
     "@types/http-server": "^0.10.0",
