@@ -33,3 +33,10 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
     app.quit();
 })
+
+   // SSL/TSL: this is the self signed certificate support
+  app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
+    // TODO: actually verify
+    event.preventDefault();
+    callback(true);
+});
