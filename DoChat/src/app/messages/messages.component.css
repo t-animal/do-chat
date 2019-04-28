@@ -19,7 +19,7 @@
     box-shadow: var(--drop-shadow);
     border-radius: var(--box-border-radius);
 
-    word-break: break-all;
+    word-break: break-word;
     
     clear: both;
 }
