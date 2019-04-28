@@ -6,7 +6,7 @@ const RECEIVER_NAME_KEY = 'receiver-name';
 const SERVER_KEY = 'server-address';
 const SENDER_NAME_KEY = 'sender-name';
 
-const DEFAULT_SERVER = 'ws://localhost:8080';
+const DEFAULT_SERVER = 'wss:///:2604';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +30,6 @@ export class ConfigHolderService {
     this.name.next(name);
   }
 
-  setServer(server: string) {
-    this.storage.set(SERVER_KEY, server);
-    this.server.next(server);
-  }
-
   setSenderName(name: string) {
     if(name.trim() === ''){
       name = 'Unknown Sender';
@@ -50,15 +45,6 @@ export class ConfigHolderService {
       return this.name.asObservable();
 
     return concat(of(storedName), this.name.asObservable());
-  }
-
-  getServer() {
-    if(this.storage.get(SERVER_KEY) === null){
-      this.storage.set(SERVER_KEY, DEFAULT_SERVER);
-    }
-
-    const storedServer: string = this.storage.get(SERVER_KEY);
-    return concat(of(storedServer), this.server.asObservable());
   }
 
   getSenderName() {

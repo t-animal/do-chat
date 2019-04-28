@@ -5,6 +5,7 @@ import { IdentificationService } from './identification.service';
 import { HistoryService } from './history.service';
 import { ConfigHolderService } from './config-holder.service';
 
+const DEBUG = true;
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,6 @@ export class WebsocketServiceService implements OnDestroy {
   private senderName = 'Unknown Sender';
   private senderNameSubscription: Subscription;
 
-  private serverAddressSubscription: Subscription;
-
   private reconnectionTimeout: number;
 
   constructor(
@@ -26,13 +25,16 @@ export class WebsocketServiceService implements OnDestroy {
     private historyService: HistoryService,
     configService: ConfigHolderService
   ) {
-    this.serverAddressSubscription = configService.getServer().subscribe(server => this.connect(server));
+    if(DEBUG){
+      this.connect(`ws://localhost:2604`);
+    } else {
+      this.connect(`wss://${window.location.host}`);
+    }
     this.senderNameSubscription = configService.getSenderName().subscribe(name => this.senderName = name);
   }
 
   ngOnDestroy() {
     this.senderNameSubscription.unsubscribe();
-    this.serverAddressSubscription.unsubscribe();
   }
 
   sendMessage(messageText: string) {
