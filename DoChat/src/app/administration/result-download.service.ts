@@ -58,7 +58,7 @@ export class ResultDownloadService {
   createDownload() {
     const zip = new JSZip();
     
-    zip.file('log.csv', this.createTextFileContent());
+    zip.file('log.txt', this.createTextFileContent());
 
     zip.folder(RECORDS_FOLDER);
     let i = 0;
