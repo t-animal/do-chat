@@ -36,7 +36,7 @@
 
       <div class="button-area">
         <button onclick="wrappedStartServer()">Start server</button>
-        <button onclick="wrappeStopServer()">Stop server</button>
+        <button onclick="wrappedStopServer()">Stop server</button>
       </div>
 
       <div class="log-area">
@@ -48,37 +48,43 @@
 
   <script>
       const { startServer, stopServer } = require('./socket-server.js');
-      const { startWebServer, stopWebServer } = require('./web-server.js');
+      const { ServerBuilder } = require('./web-server.js');
       const { wrapConsole } = require('./wrap-console.js');
       const ip = require('ip');
-  
-      let isRunning = false;
+      const port = 2604;
+
+      let server = null;
+
+      function isRunning() {
+        return server !== null
+      };
+
       function wrappedStartServer() {
-        if(isRunning){
+        if(isRunning()){
           return;
         }
-        startServer();
-        startWebServer();
-        isRunning = true;
-        writeServerState();
+        server = new ServerBuilder('app/bin/')
+                  .withSsl()
+                  .withSocketServer()
+                  .withWebServer()
+                  .build();
+        server.listen(port);
       }
 
-      function wrappeStopServer() {
-        if(!isRunning) {
+      function wrappedStopServer() {
+        if(!isRunning()) {
           return;
         }
-        stopServer();
-        stopWebServer();
-        isRunning = false;
+        server.close();
+        server = null;
         writeServerState();
       }
   
       function writeServerState() {
-        document.querySelector(".server-state").textContent = isRunning ? 'Gestartet' : 'Gestoppt';
-        document.querySelector(".frontend-address").textContent = `http://${ip.address()}:8081`;
-        document.querySelector(".backend-address").textContent = `ws://${ip.address()}:8080`;
-        document.querySelector(".address-info").style.visibility = isRunning ? 'visible' : 'hidden';
-        document.querySelector("iframe").contentDocument.location.reload(true);
+        document.querySelector(".server-state").textContent = isRunning() ? 'Gestartet' : 'Gestoppt';
+        document.querySelector(".frontend-address").textContent = `https://${ip.address()}:${port}`;
+        document.querySelector(".address-info").style.visibility = isRunning() ? 'visible' : 'hidden';
+        document.querySelector("iframe").src = isRunning() ? "https://localhost:2604" : '';
       }
 
       writeServerState();

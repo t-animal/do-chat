@@ -1,0 +1,52 @@
+{
+  "program": {
+    "fileInfos": {
+      "/usr/lib/node_modules/typescript/lib/lib.d.ts": {
+        "version": "49ff9798f592c8b7e628fd881401e68810c1b3589ecd7a41b32b3c287374cde0",
+        "signature": "49ff9798f592c8b7e628fd881401e68810c1b3589ecd7a41b32b3c287374cde0"
+      },
+      "/usr/lib/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88",
+        "signature": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88"
+      },
+      "/usr/lib/node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "6994c583b66862deca24d7bbf77297d95b9d3da8160dbd9beef6b847cf7c1376",
+        "signature": "6994c583b66862deca24d7bbf77297d95b9d3da8160dbd9beef6b847cf7c1376"
+      },
+      "/usr/lib/node_modules/typescript/lib/lib.webworker.importscripts.d.ts": {
+        "version": "fe4e59403e34c7ff747abe4ff6abbc7718229556d7c1a5b93473fb53156c913b",
+        "signature": "fe4e59403e34c7ff747abe4ff6abbc7718229556d7c1a5b93473fb53156c913b"
+      },
+      "/usr/lib/node_modules/typescript/lib/lib.scripthost.d.ts": {
+        "version": "b9faa17292f17d2ad75e34fac77dd63a6403af1dba02d39cd0cbb9ffdf3de8b9",
+        "signature": "b9faa17292f17d2ad75e34fac77dd63a6403af1dba02d39cd0cbb9ffdf3de8b9"
+      },
+      "/home/tilman/projekte/chat/model/message.ts": {
+        "version": "3fc5d2ec6f16ffa39e2393e1527c9c6dd72d7159d2e0ca550fecdeb42e5713b9",
+        "signature": "622a51385e02b10beada9c7c6a0d8c3553fc6d3d61683bf26fb0a6c58999d1f4"
+      }
+    },
+    "options": {
+      "target": 1,
+      "module": 1,
+      "declaration": true,
+      "composite": true,
+      "strict": true,
+      "baseUrl": "/home/tilman/projekte/chat/model/",
+      "paths": {},
+      "esModuleInterop": true,
+      "configFilePath": "/home/tilman/projekte/chat/model/tsconfig.json"
+    },
+    "referencedMap": {},
+    "exportedModulesMap": {},
+    "semanticDiagnosticsPerFile": [
+      "/usr/lib/node_modules/typescript/lib/lib.d.ts",
+      "/usr/lib/node_modules/typescript/lib/lib.es5.d.ts",
+      "/usr/lib/node_modules/typescript/lib/lib.dom.d.ts",
+      "/usr/lib/node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "/usr/lib/node_modules/typescript/lib/lib.scripthost.d.ts",
+      "/home/tilman/projekte/chat/model/message.ts"
+    ]
+  },
+  "version": "3.4.1"
+}
