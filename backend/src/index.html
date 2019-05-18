@@ -20,7 +20,7 @@
          Hier kannst du mitlesen, was die Teilnehmer schreiben. Dies ist ein teilnehmender Chat-Partner
          wie alle anderen Teilnehmer auch und muss dementsprechend genauso konfiguriert werden!
         </span>
-        <iframe class="preview" src="http://localhost:8081"></iframe>
+        <iframe class="preview" src="https://localhost:2604"></iframe>
     </main>
   
     <main data-page="server" class="active">
@@ -46,8 +46,8 @@
     </main>
 
   <script>
-      const { startServer, stopServer } = require('./socket-server.js');
-      const { ServerBuilder } = require('./web-server.js');
+    try {
+      const { ServerBuilder } = require('./server.js');
       const { wrapConsole } = require('./wrap-console.js');
       const ip = require('ip');
       const port = 2604;
@@ -62,12 +62,24 @@
         if(isRunning()){
           return;
         }
-        server = new ServerBuilder('app/bin/')
+        server = new ServerBuilder('resources/app/')
                   .withSsl()
                   .withSocketServer()
                   .withWebServer()
                   .build();
         server.listen(port);
+        writeServerState();
+
+
+        window.setTimeout(() => {
+          document.querySelector('iframe').contentWindow.location.href = 'https://localhost:2604';
+        }, 1000);
+
+        // we need to do this twice because fuck you
+        // also I have no idea how long to wait and what to wait for. meh.
+        window.setTimeout(() => {
+          document.querySelector('iframe').contentWindow.location.href = 'https://localhost:2604';
+        }, 2000);
       }
 
       function wrappedStopServer() {
@@ -83,7 +95,6 @@
         document.querySelector(".server-state").textContent = isRunning() ? 'Gestartet' : 'Gestoppt';
         document.querySelector(".frontend-address").textContent = `https://${ip.address()}:${port}`;
         document.querySelector(".address-info").style.visibility = isRunning() ? 'visible' : 'hidden';
-        document.querySelector("iframe").src = isRunning() ? "https://localhost:2604" : '';
       }
 
       writeServerState();
@@ -104,6 +115,9 @@
         document.querySelector('main[data-page].active').classList.remove('active');
         pageElem.classList.add('active');
       }
+    }catch(e) {
+      console.error(e);
+    }
 
     </script>
   </body>
